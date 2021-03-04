@@ -1,7 +1,5 @@
 # Einzelbeispiel-SE2
-Software Engineering II (621.250, 21S) Einzelbeispiel
-
-2.	Projektbeschreibung
+Software Engineering II (621.250, 21S) Einzelbeispiel Projektbeschreibung
 
 2.1
 Erstellen Sie	eine	einfache	Android-Anwendung, die	ein	Eingabefeld,	ein	Textfeld	und	
