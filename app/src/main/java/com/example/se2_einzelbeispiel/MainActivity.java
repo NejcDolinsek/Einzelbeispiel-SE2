@@ -17,14 +17,47 @@ import android.widget.TextView;
 import java.io.*;
 import java.net.*;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    public void run() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        // BUtton - Task 1
+        Button matNrToServer = (Button) findViewById(R.id.matToServerBTN);
+        matNrToServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    run();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //Button - Task 2 - Prime numbers in Matrikelnummer
+        Button primeNumbers = (Button) findViewById(R.id.primeNumbers);
+        primeNumbers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+
+
+    //Method for the TCP Client call
+    public void run() throws IOException {
         TextView TextAnswer = (TextView) findViewById(R.id.Answer);
         EditText InputText = (EditText) findViewById(R.id.Input);
 
-        try {
+
             String serverInput = InputText.getText().toString();
 
             Socket clientSocked = new Socket("se2-isys.aau.at", 53212);
@@ -38,27 +71,7 @@ public class MainActivity extends AppCompatActivity {
             TextAnswer.setText(inFormServer.readLine());
 
             clientSocked.close();
-        }catch (Exception e){
-            TextAnswer.setText("Something went wrong");
-        }
-    }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-        final Button matNrToServer = (Button) findViewById(R.id.matToServerBTN);
-        matNrToServer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                run();
-            }
-        });
     }
 
     @Override
