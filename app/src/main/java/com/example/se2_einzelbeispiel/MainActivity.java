@@ -1,7 +1,9 @@
 package com.example.se2_einzelbeispiel;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        // BUtton - Task 1
+        // Button - Task 1
         Button matNrToServer = (Button) findViewById(R.id.matToServerBTN);
         matNrToServer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,9 +46,23 @@ public class MainActivity extends AppCompatActivity {
         //Button - Task 2 - Prime numbers in Matrikelnummer
         Button primeNumbers = (Button) findViewById(R.id.primeNumbers);
         primeNumbers.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                EditText InputText = (EditText) findViewById(R.id.Input);
+                TextView TextAnswer = (TextView) findViewById(R.id. Answer);
 
+                // Get the Input from the EditText and change it to String
+                String matrikelnummer = InputText.getText().toString();
+
+                //Calculate the Prime numbers from the MATNummber
+                ArrayList primeNumbers =PrimeNumber.calcPrimeNumbers(matrikelnummer);
+
+                //Change the ArrayList with primenumbers to String
+                String primeNumbersString = PrimeNumber.ArrayListToString(primeNumbers);
+
+                //Display the Primenumbers in the textView
+                TextAnswer.setText(primeNumbersString);
             }
         });
     }
