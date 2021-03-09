@@ -14,4 +14,5 @@
     <string name="antwort_vom_server">Antwort vom Server</string>
     <string name="get_prime_numbers">Get prime numbers</string>
     <string name="gib_deine_matrikel_nummer_ein">Gib deine Matrikel nummer ein:</string>
+    <string name="antwort">Antwort</string>
 </resources>

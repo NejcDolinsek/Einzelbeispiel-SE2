@@ -1,11 +1,8 @@
 package com.example.se2_einzelbeispiel;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -40,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
         });
 
@@ -47,47 +45,46 @@ public class MainActivity extends AppCompatActivity {
         Button primeNumbers = (Button) findViewById(R.id.primeNumbers);
         primeNumbers.setOnClickListener(new View.OnClickListener() {
 
+
             @Override
             public void onClick(View v) {
                 EditText InputText = (EditText) findViewById(R.id.Input);
-                TextView TextAnswer = (TextView) findViewById(R.id. Answer);
+                TextView TextAnswer = (TextView) findViewById(R.id.Answer);
 
                 // Get the Input from the EditText and change it to String
                 String matrikelnummer = InputText.getText().toString();
 
-                //Calculate the Prime numbers from the MATNummber
-                ArrayList primeNumbers =PrimeNumber.calcPrimeNumbers(matrikelnummer);
 
-                //Change the ArrayList with primenumbers to String
-                String primeNumbersString = PrimeNumber.ArrayListToString(primeNumbers);
+                String primeNumbersString = PrimeNumber.matPrimeNumbers(matrikelnummer);
 
-                //Display the Primenumbers in the textView
+
+
+                //Display the Prime numbers in the textView
                 TextAnswer.setText(primeNumbersString);
             }
         });
     }
 
-
-
-    //Method for the TCP Client call
     public void run() throws IOException {
         TextView TextAnswer = (TextView) findViewById(R.id.Answer);
         EditText InputText = (EditText) findViewById(R.id.Input);
 
 
-            String serverInput = InputText.getText().toString();
+            String sentence = InputText.getText().toString();
 
-            Socket clientSocked = new Socket("se2-isys.aau.at", 53212);
+            Socket clientsocket = new Socket("se2-isys.aau.at", 53212);
 
-            DataOutputStream outToServer = new DataOutputStream(clientSocked.getOutputStream());
+            DataOutputStream outToServer = new DataOutputStream(clientsocket.getOutputStream());
 
-            BufferedReader inFormServer = new BufferedReader(new InputStreamReader(clientSocked.getInputStream()));
+            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientsocket.getInputStream()));
 
-            outToServer.writeBytes(serverInput);
+            outToServer.writeBytes(sentence);
 
-            TextAnswer.setText(inFormServer.readLine());
+            TextAnswer.setText(inFromServer.readLine());
 
-            clientSocked.close();
+            clientsocket.close();
+
+
 
     }
 
