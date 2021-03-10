@@ -1,8 +1,11 @@
 package com.example.se2_einzelbeispiel;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +15,7 @@ import android.widget.TextView;
 
 import java.io.*;
 import java.net.*;
-
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,30 +28,46 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Button - Task 1
+        Button matNrToServer = (Button) findViewById(R.id.matToServerBTN);
+        matNrToServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    run();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
+            }
+        });
 
         //Button - Task 2 - Prime numbers in Matrikelnummer
-        Button primeNumbers = findViewById(R.id.primeNumbers);
-        primeNumbers.setOnClickListener(v -> {
-            EditText InputText = findViewById(R.id.Input);
-            TextView TextAnswer = findViewById(R.id.Answer);
+        Button primeNumbers = (Button) findViewById(R.id.primeNumbers);
+        primeNumbers.setOnClickListener(new View.OnClickListener() {
 
-            // Get the Input from the EditText and change it to String
-            String matrikelnummer = InputText.getText().toString();
 
-            //Calculating the prime numbers in the Matrikelnummer
-            String primeNumbersString = PrimeNumber.matPrimeNumbers(matrikelnummer);
+            @Override
+            public void onClick(View v) {
+                EditText InputText = (EditText) findViewById(R.id.Input);
+                TextView TextAnswer = (TextView) findViewById(R.id.Answer);
 
-            //Display the Prime numbers in the textView
-            TextAnswer.setText("PRIME NUMBERS: " + primeNumbersString);
+                // Get the Input from the EditText and change it to String
+                String matrikelnummer = InputText.getText().toString();
+
+
+                String primeNumbersString = PrimeNumber.matPrimeNumbers(matrikelnummer);
+
+
+
+                //Display the Prime numbers in the textView
+                TextAnswer.setText(primeNumbersString);
+            }
         });
     }
 
-
-
-   /* public void run() throws IOException {
-        TextView TextAnswer = findViewById(R.id.Answer);
-        EditText InputText = findViewById(R.id.Input);
+    public void run() throws IOException {
+        TextView TextAnswer = (TextView) findViewById(R.id.Answer);
+        EditText InputText = (EditText) findViewById(R.id.Input);
 
 
             String sentence = InputText.getText().toString();
@@ -67,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,33 +109,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public static String run(String matrikelnummerString) throws IOException {
-
-        InputStream matrikelnummer = new ByteArrayInputStream(matrikelnummerString.getBytes());
-
-        String sentence;
-        String modifiedSentence;
-
-        BufferedReader inFormUser = new BufferedReader(new InputStreamReader(matrikelnummer));
-
-        Socket clientSocked = new Socket("se2-isys.aau.at", 53212);
-
-        DataOutputStream outToServer = new DataOutputStream(clientSocked.getOutputStream());
-
-        BufferedReader inFormServer = new BufferedReader(new InputStreamReader(clientSocked.getInputStream()));
-
-        sentence = inFormUser.readLine();
-
-        outToServer.writeBytes(sentence + "\n");
-
-        modifiedSentence = inFormServer.readLine();
-
-        clientSocked.close();
-
-        return "Server answer: "+modifiedSentence;
-
-
-    }
 }
-
